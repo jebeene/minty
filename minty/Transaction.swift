@@ -8,6 +8,7 @@
 import Foundation
 
 struct Transaction {
+    var id: Int64? // Added ID field
     var description: String
     var amount: Double
     var type: TransactionType

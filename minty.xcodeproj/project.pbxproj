@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		85A56D4AEFA01F66EA109176 /* Pods_minty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81B94EB1E8A9AB8EC6F0328D /* Pods_minty.framework */; };
+		B81B3AC82B588597003A65A7 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81B3AC72B588597003A65A7 /* DatabaseManager.swift */; };
 		B88ABBB92B509B6100CD9BD2 /* mintyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88ABBB82B509B6100CD9BD2 /* mintyApp.swift */; };
 		B88ABBBB2B509B6100CD9BD2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88ABBBA2B509B6100CD9BD2 /* ContentView.swift */; };
 		B88ABBBD2B509B6200CD9BD2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B88ABBBC2B509B6200CD9BD2 /* Assets.xcassets */; };
@@ -15,12 +17,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		81B94EB1E8A9AB8EC6F0328D /* Pods_minty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_minty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		957B4951114CA7BAC3FD7F75 /* Pods-minty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-minty.release.xcconfig"; path = "Target Support Files/Pods-minty/Pods-minty.release.xcconfig"; sourceTree = "<group>"; };
+		B81B3AC72B588597003A65A7 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		B88ABBB52B509B6100CD9BD2 /* minty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = minty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B88ABBB82B509B6100CD9BD2 /* mintyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mintyApp.swift; sourceTree = "<group>"; };
 		B88ABBBA2B509B6100CD9BD2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B88ABBBC2B509B6200CD9BD2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B88ABBBF2B509B6200CD9BD2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B88ABBC62B509D8A00CD9BD2 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		BA4F47FFADBC56C380920CD5 /* Pods-minty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-minty.debug.xcconfig"; path = "Target Support Files/Pods-minty/Pods-minty.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,17 +34,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85A56D4AEFA01F66EA109176 /* Pods_minty.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F1814AAC002CDBF10E5A954 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				81B94EB1E8A9AB8EC6F0328D /* Pods_minty.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B88ABBAC2B509B6100CD9BD2 = {
 			isa = PBXGroup;
 			children = (
 				B88ABBB72B509B6100CD9BD2 /* minty */,
 				B88ABBB62B509B6100CD9BD2 /* Products */,
+				C51B4326961F447D65F2CF76 /* Pods */,
+				4F1814AAC002CDBF10E5A954 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +75,7 @@
 				B88ABBBC2B509B6200CD9BD2 /* Assets.xcassets */,
 				B88ABBBE2B509B6200CD9BD2 /* Preview Content */,
 				B88ABBC62B509D8A00CD9BD2 /* Transaction.swift */,
+				B81B3AC72B588597003A65A7 /* DatabaseManager.swift */,
 			);
 			path = minty;
 			sourceTree = "<group>";
@@ -70,6 +88,15 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		C51B4326961F447D65F2CF76 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BA4F47FFADBC56C380920CD5 /* Pods-minty.debug.xcconfig */,
+				957B4951114CA7BAC3FD7F75 /* Pods-minty.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -77,9 +104,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B88ABBC32B509B6200CD9BD2 /* Build configuration list for PBXNativeTarget "minty" */;
 			buildPhases = (
+				DBF1A7EB442BC66363B9DAAE /* [CP] Check Pods Manifest.lock */,
 				B88ABBB12B509B6100CD9BD2 /* Sources */,
 				B88ABBB22B509B6100CD9BD2 /* Frameworks */,
 				B88ABBB32B509B6100CD9BD2 /* Resources */,
+				C392866B72DE49716FBD9C15 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -135,11 +164,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		C392866B72DE49716FBD9C15 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-minty/Pods-minty-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-minty/Pods-minty-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-minty/Pods-minty-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DBF1A7EB442BC66363B9DAAE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-minty-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B88ABBB12B509B6100CD9BD2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B81B3AC82B588597003A65A7 /* DatabaseManager.swift in Sources */,
 				B88ABBBB2B509B6100CD9BD2 /* ContentView.swift in Sources */,
 				B88ABBB92B509B6100CD9BD2 /* mintyApp.swift in Sources */,
 				B88ABBC72B509D8A00CD9BD2 /* Transaction.swift in Sources */,
@@ -265,6 +337,7 @@
 		};
 		B88ABBC42B509B6200CD9BD2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BA4F47FFADBC56C380920CD5 /* Pods-minty.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -294,6 +367,7 @@
 		};
 		B88ABBC52B509B6200CD9BD2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 957B4951114CA7BAC3FD7F75 /* Pods-minty.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

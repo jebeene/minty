@@ -30,6 +30,7 @@ struct ContentView: View {
                         addTransaction()
                     }
                 }
+                
 
                 Section(header: Text("Transactions")) {
                     List(transactions, id: \.description) { transaction in
@@ -41,8 +42,18 @@ struct ContentView: View {
                         }
                     }
                 }
+                
             }
-            .navigationBarTitle("Finance Manager")
+            .navigationBarTitle("minty")
+            .navigationBarItems(trailing: Button("Clear Data") {
+                        // This code is executed when the "Clear Data" button is tapped
+                        let _ = DatabaseManager.instance.clearAllTransactions()
+                        // Clear the local transactions array to update the UI
+                        transactions.removeAll()
+                    })
+            .onAppear {
+                loadTransactions()
+            }
         }
     }
 
@@ -50,8 +61,18 @@ struct ContentView: View {
         guard let amount = Double(transactionAmount),
               !transactionDescription.isEmpty else { return }
         let newTransaction = Transaction(description: transactionDescription, amount: amount, type: selectedType)
+        // Add the transaction to the local array (if needed for UI update)
         transactions.append(newTransaction)
+        // Reset input fields
         transactionDescription = ""
         transactionAmount = ""
+        // Add the transaction to the database
+        let _ = DatabaseManager.instance.addTransaction(transaction: newTransaction)
+    }
+    
+    private func loadTransactions() {
+           if let fetchedTransactions = DatabaseManager.instance.getAllTransactions() {
+               transactions = fetchedTransactions
+           }
     }
 }
