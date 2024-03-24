@@ -11,6 +11,7 @@ import SwiftUI
 struct mintyApp: App {
     
     init() {
+//        DatabaseManager.instance.clearDatabase()
         DatabaseManager.instance.initializeTables()
     }
     

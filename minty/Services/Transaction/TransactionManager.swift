@@ -28,6 +28,7 @@ class TransactionManager {
     func addTransaction(_ transaction: Transaction) throws {
         guard let db = db else { throw DatabaseManager.DatabaseError.connectionError }
         let insert = transactions.insert(
+            Expression<String>("id") <- UUID().uuidString,
             Expression<String>("description") <- transaction.description,
             Expression<Double>("amount") <- transaction.amount,
             Expression<String>("type") <- transaction.type,
@@ -37,29 +38,34 @@ class TransactionManager {
     }
     
     func getAllTransactions() throws -> [Transaction] {
-        guard let db = db else { throw DatabaseManager.DatabaseError.connectionError }
         var transactionList = [Transaction]()
-        for transaction in try db.prepare(transactions) {
-            guard let transactionId = UUID(uuidString: transaction[Expression<String>("id")]) else {
-                throw DatabaseManager.DatabaseError.idError
+
+        guard let db = db else { return transactionList }
+        
+        for transactionRow in try db.prepare(self.transactions) {
+            guard let id = UUID(uuidString: (try transactionRow.get(Expression<String>("id")))) else {
+                print("Skipping a transaction due to bad id!")
+                continue
             }
             
-            guard let categoryId = UUID(uuidString: transaction[Expression<String>("categoryId")]) else {
-                throw DatabaseManager.DatabaseError.idError
+            
+            guard let categoryId = UUID(uuidString: transactionRow[Expression<String>("categoryId")]) else {
+                print("Skipping a transaction due to bad category id!")
+                continue
             }
                     
             let loadedTransaction = Transaction(
-                id: transactionId,
-                description: transaction[Expression<String>("description")],
-                amount: transaction[Expression<Double>("amount")],
-                type: transaction[Expression<String>("type")],
+                id: id,
+                description: transactionRow[Expression<String>("description")],
+                amount: transactionRow[Expression<Double>("amount")],
+                type: transactionRow[Expression<String>("type")],
                 categoryId: categoryId
             )
             transactionList.append(loadedTransaction)
         }
         return transactionList
     }
-    
+   
     func updateTransaction(_ transaction: Transaction) throws {
         guard let db = db else { throw DatabaseManager.DatabaseError.connectionError }
         

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		85A56D4AEFA01F66EA109176 /* Pods_minty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81B94EB1E8A9AB8EC6F0328D /* Pods_minty.framework */; };
 		B80054C62BADF0B400A9F33D /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80054C52BADF0B400A9F33D /* Category.swift */; };
-		B80054C82BADF26800A9F33D /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80054C72BADF26800A9F33D /* CategoryView.swift */; };
 		B81B3AC82B588597003A65A7 /* DatabaseManagerOLD.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81B3AC72B588597003A65A7 /* DatabaseManagerOLD.swift */; };
 		B88ABBB92B509B6100CD9BD2 /* mintyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88ABBB82B509B6100CD9BD2 /* mintyApp.swift */; };
 		B88ABBBB2B509B6100CD9BD2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88ABBBA2B509B6100CD9BD2 /* ContentView.swift */; };
@@ -20,13 +19,13 @@
 		B8D488B42BAF9EBF005A6CD5 /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D488B32BAF9EBF005A6CD5 /* TransactionManager.swift */; };
 		B8D488B62BAF9FF1005A6CD5 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D488B52BAF9FF1005A6CD5 /* CategoryManager.swift */; };
 		B8D488BA2BAFA923005A6CD5 /* TransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D488B92BAFA923005A6CD5 /* TransactionViewModel.swift */; };
+		B8D488BC2BB0A8B4005A6CD5 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D488BB2BB0A8B4005A6CD5 /* CategoryViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		81B94EB1E8A9AB8EC6F0328D /* Pods_minty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_minty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		957B4951114CA7BAC3FD7F75 /* Pods-minty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-minty.release.xcconfig"; path = "Target Support Files/Pods-minty/Pods-minty.release.xcconfig"; sourceTree = "<group>"; };
 		B80054C52BADF0B400A9F33D /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
-		B80054C72BADF26800A9F33D /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		B81B3AC72B588597003A65A7 /* DatabaseManagerOLD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerOLD.swift; sourceTree = "<group>"; };
 		B88ABBB52B509B6100CD9BD2 /* minty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = minty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B88ABBB82B509B6100CD9BD2 /* mintyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mintyApp.swift; sourceTree = "<group>"; };
@@ -38,6 +37,7 @@
 		B8D488B32BAF9EBF005A6CD5 /* TransactionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; };
 		B8D488B52BAF9FF1005A6CD5 /* CategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryManager.swift; sourceTree = "<group>"; };
 		B8D488B92BAFA923005A6CD5 /* TransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModel.swift; sourceTree = "<group>"; };
+		B8D488BB2BB0A8B4005A6CD5 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		BA4F47FFADBC56C380920CD5 /* Pods-minty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-minty.debug.xcconfig"; path = "Target Support Files/Pods-minty/Pods-minty.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,8 +140,8 @@
 			isa = PBXGroup;
 			children = (
 				B88ABBBA2B509B6100CD9BD2 /* ContentView.swift */,
-				B80054C72BADF26800A9F33D /* CategoryView.swift */,
 				B8D488B92BAFA923005A6CD5 /* TransactionViewModel.swift */,
+				B8D488BB2BB0A8B4005A6CD5 /* CategoryViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -288,7 +288,7 @@
 				B81B3AC82B588597003A65A7 /* DatabaseManagerOLD.swift in Sources */,
 				B80054C62BADF0B400A9F33D /* Category.swift in Sources */,
 				B8D488B62BAF9FF1005A6CD5 /* CategoryManager.swift in Sources */,
-				B80054C82BADF26800A9F33D /* CategoryView.swift in Sources */,
+				B8D488BC2BB0A8B4005A6CD5 /* CategoryViewModel.swift in Sources */,
 				B88ABBBB2B509B6100CD9BD2 /* ContentView.swift in Sources */,
 				B8D488B42BAF9EBF005A6CD5 /* TransactionManager.swift in Sources */,
 				B88ABBB92B509B6100CD9BD2 /* mintyApp.swift in Sources */,

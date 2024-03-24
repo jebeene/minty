@@ -33,6 +33,18 @@ class DatabaseManager {
         return db
     }
     
+    func clearDatabase() {
+        let allTables = ["categories", "transactions"] // Add all your table names here
+        do {
+            for tableName in allTables {
+                try db?.run("DROP TABLE IF EXISTS \(tableName)")
+            }
+        } catch {
+            print("Error dropping tables: \(error)")
+        }
+
+    }
+    
     enum DatabaseError: Error {
         case connectionError
         case idError

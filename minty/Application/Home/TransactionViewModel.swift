@@ -9,7 +9,6 @@ import Foundation
 
 class TransactionViewModel: ObservableObject {
     @Published var transactions: [Transaction] = []
-    @Published var categories: [Category] = []
     private var transactionManager = TransactionManager()
 
     init() {

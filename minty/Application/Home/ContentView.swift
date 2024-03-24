@@ -9,21 +9,41 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var transactionViewModel = TransactionViewModel()
+    @StateObject var categoryViewModel = CategoryViewModel()
     @State private var showingAddTransaction = false  // To control the add transaction view presentation
+    @State private var showingAlert = false // State for showing an alert
+
 
     var body: some View {
         NavigationView {
             List(transactionViewModel.transactions) { transaction in
                 TransactionRow(transaction: transaction)
             }
-            .navigationBarTitle("Transactions")
-            .navigationBarItems(trailing: Button(action: {
-                showingAddTransaction = true
-            }) {
-                Image(systemName: "plus")
-            })
+            .navigationBarTitle("minty")
+            .navigationBarItems(
+                leading: Button("Clear Data") {
+                    showingAlert = true
+                },
+                trailing: Button(action: {
+                    showingAddTransaction = true
+                }) {
+                    Image(systemName: "plus")
+                }
+            )
             .sheet(isPresented: $showingAddTransaction) {
-                AddTransactionView(transactionViewModel: transactionViewModel)
+                AddTransactionView(transactionViewModel: transactionViewModel, categoryViewModel: categoryViewModel)
+            }
+            .alert(isPresented: $showingAlert) {
+                Alert(
+                    title: Text("Confirm"),
+                    message: Text("Are you sure you want to clear all data?"),
+                    primaryButton: .destructive(Text("Clear")) {
+                        DatabaseManager.instance.clearDatabase()
+                        transactionViewModel.loadTransactions()
+                        categoryViewModel.loadCategories()
+                    },
+                    secondaryButton: .cancel()
+                )
             }
         }
     }
@@ -44,14 +64,15 @@ struct TransactionRow: View {
 
 struct AddTransactionView: View {
     @ObservedObject var transactionViewModel: TransactionViewModel
+    @ObservedObject var categoryViewModel: CategoryViewModel
+    @Environment(\.presentationMode) var presentationMode
     @State private var description: String = ""
     @State private var amount: String = ""
     @State private var type: String = "Expense"
-    @State private var selectedCategoryId: UUID? = nil // Ensure this aligns with your category IDs
+    @State private var selectedCategoryId: UUID? = nil
     @State private var showingAddCategory = false
     @State private var showAlert = false
     @State private var alertMessage = ""
-
 
     var body: some View {
         NavigationView {
@@ -65,9 +86,14 @@ struct AddTransactionView: View {
                     Text("Expense").tag("Expense")
                 }.pickerStyle(SegmentedPickerStyle())
 
+                // Updated picker for selecting category
                 Picker("Category", selection: $selectedCategoryId) {
-                    ForEach(transactionViewModel.categories) { category in
-                        Text(category.name).tag(category.id as UUID?) // Cast to UUID?
+                    ForEach(categoryViewModel.categories) { category in
+                        Text(category.name).tag(category.id as UUID?) // Ensuring type consistency
+                    }
+                }.onAppear {
+                    if let firstCategoryId = categoryViewModel.categories.first?.id {
+                        selectedCategoryId = firstCategoryId
                     }
                 }
 
@@ -75,58 +101,62 @@ struct AddTransactionView: View {
                     showingAddCategory = true
                 }
                 .sheet(isPresented: $showingAddCategory) {
-                    AddCategoryView(transactionViewModel: transactionViewModel)
+                    AddCategoryView(categoryViewModel: categoryViewModel) { newCategoryId in
+                        selectedCategoryId = newCategoryId
+                        categoryViewModel.loadCategories()
+                    }
                 }
 
                 Button("Save") {
-                    // Validate the 'amount' and convert it to Double
-                    guard let amountDouble = Double(amount) else {
+                    // Validation and saving logic here
+                    guard let amountDouble = Double(amount), amountDouble > 0 else {
                         alertMessage = "Invalid amount. Please enter a numeric value."
                         showAlert = true
                         return
                     }
 
-                    // Ensure a category has been selected
                     guard let categoryId = selectedCategoryId else {
-                        alertMessage = "No category selected. Please select a category."
+                        alertMessage = "Please select a category."
                         showAlert = true
                         return
                     }
 
-                    // Both checks passed, add the transaction
-                    transactionViewModel.addTransaction(description: description,
-                                                        amount: amountDouble,
-                                                        type: type,
-                                                        categoryId: categoryId)
+                    transactionViewModel.addTransaction(description: description, amount: amountDouble, type: type, categoryId: categoryId)
+                    presentationMode.wrappedValue.dismiss()
                 }
             }
             .navigationBarTitle("Add Transaction", displayMode: .inline)
             .alert(isPresented: $showAlert) {
-                    Alert(
-                        title: Text("Input Error"),
-                        message: Text(alertMessage),
-                        dismissButton: .default(Text("OK"))
-                    )
-                }
+                Alert(
+                    title: Text("Input Error"),
+                    message: Text(alertMessage),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
     }
 }
 
 struct AddCategoryView: View {
-    @ObservedObject var transactionViewModel: TransactionViewModel
+    @ObservedObject var categoryViewModel: CategoryViewModel
     @State private var categoryName: String = ""
+    @Environment(\.presentationMode) var presentationMode
+
+    // Add a completion handler to pass back the new category ID
+    var onCategoryAdded: (UUID) -> Void
 
     var body: some View {
         NavigationView {
             Form {
                 TextField("Category Name", text: $categoryName)
                 Button("Save") {
-                    // Add category saving logic here
-                    // For now, just dismiss
+                    let newCategoryId = UUID() // Generate a new UUID for the category
+                    categoryViewModel.addCategory(id: newCategoryId, name: categoryName)
+                    onCategoryAdded(newCategoryId) // Pass the new category ID back
+                    presentationMode.wrappedValue.dismiss() // Dismiss after saving
                 }
             }
             .navigationBarTitle("Add Category", displayMode: .inline)
         }
     }
 }
-
