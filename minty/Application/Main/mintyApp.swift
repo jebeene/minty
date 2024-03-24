@@ -9,6 +9,11 @@ import SwiftUI
 
 @main
 struct mintyApp: App {
+    
+    init() {
+        DatabaseManager.instance.initializeTables()
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

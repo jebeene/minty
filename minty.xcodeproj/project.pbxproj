@@ -8,24 +8,36 @@
 
 /* Begin PBXBuildFile section */
 		85A56D4AEFA01F66EA109176 /* Pods_minty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81B94EB1E8A9AB8EC6F0328D /* Pods_minty.framework */; };
-		B81B3AC82B588597003A65A7 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81B3AC72B588597003A65A7 /* DatabaseManager.swift */; };
+		B80054C62BADF0B400A9F33D /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80054C52BADF0B400A9F33D /* Category.swift */; };
+		B80054C82BADF26800A9F33D /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80054C72BADF26800A9F33D /* CategoryView.swift */; };
+		B81B3AC82B588597003A65A7 /* DatabaseManagerOLD.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81B3AC72B588597003A65A7 /* DatabaseManagerOLD.swift */; };
 		B88ABBB92B509B6100CD9BD2 /* mintyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88ABBB82B509B6100CD9BD2 /* mintyApp.swift */; };
 		B88ABBBB2B509B6100CD9BD2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88ABBBA2B509B6100CD9BD2 /* ContentView.swift */; };
 		B88ABBBD2B509B6200CD9BD2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B88ABBBC2B509B6200CD9BD2 /* Assets.xcassets */; };
 		B88ABBC02B509B6200CD9BD2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B88ABBBF2B509B6200CD9BD2 /* Preview Assets.xcassets */; };
 		B88ABBC72B509D8A00CD9BD2 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88ABBC62B509D8A00CD9BD2 /* Transaction.swift */; };
+		B8D488B22BAF9E16005A6CD5 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D488B12BAF9E16005A6CD5 /* DatabaseManager.swift */; };
+		B8D488B42BAF9EBF005A6CD5 /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D488B32BAF9EBF005A6CD5 /* TransactionManager.swift */; };
+		B8D488B62BAF9FF1005A6CD5 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D488B52BAF9FF1005A6CD5 /* CategoryManager.swift */; };
+		B8D488BA2BAFA923005A6CD5 /* TransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D488B92BAFA923005A6CD5 /* TransactionViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		81B94EB1E8A9AB8EC6F0328D /* Pods_minty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_minty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		957B4951114CA7BAC3FD7F75 /* Pods-minty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-minty.release.xcconfig"; path = "Target Support Files/Pods-minty/Pods-minty.release.xcconfig"; sourceTree = "<group>"; };
-		B81B3AC72B588597003A65A7 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		B80054C52BADF0B400A9F33D /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		B80054C72BADF26800A9F33D /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
+		B81B3AC72B588597003A65A7 /* DatabaseManagerOLD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerOLD.swift; sourceTree = "<group>"; };
 		B88ABBB52B509B6100CD9BD2 /* minty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = minty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B88ABBB82B509B6100CD9BD2 /* mintyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mintyApp.swift; sourceTree = "<group>"; };
 		B88ABBBA2B509B6100CD9BD2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B88ABBBC2B509B6200CD9BD2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B88ABBBF2B509B6200CD9BD2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B88ABBC62B509D8A00CD9BD2 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		B8D488B12BAF9E16005A6CD5 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		B8D488B32BAF9EBF005A6CD5 /* TransactionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; };
+		B8D488B52BAF9FF1005A6CD5 /* CategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryManager.swift; sourceTree = "<group>"; };
+		B8D488B92BAFA923005A6CD5 /* TransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModel.swift; sourceTree = "<group>"; };
 		BA4F47FFADBC56C380920CD5 /* Pods-minty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-minty.debug.xcconfig"; path = "Target Support Files/Pods-minty/Pods-minty.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -53,6 +65,8 @@
 			isa = PBXGroup;
 			children = (
 				B88ABBB72B509B6100CD9BD2 /* minty */,
+				B88ABBBE2B509B6200CD9BD2 /* Preview Content */,
+				B88ABBBC2B509B6200CD9BD2 /* Assets.xcassets */,
 				B88ABBB62B509B6100CD9BD2 /* Products */,
 				C51B4326961F447D65F2CF76 /* Pods */,
 				4F1814AAC002CDBF10E5A954 /* Frameworks */,
@@ -70,12 +84,9 @@
 		B88ABBB72B509B6100CD9BD2 /* minty */ = {
 			isa = PBXGroup;
 			children = (
-				B88ABBB82B509B6100CD9BD2 /* mintyApp.swift */,
-				B88ABBBA2B509B6100CD9BD2 /* ContentView.swift */,
-				B88ABBBC2B509B6200CD9BD2 /* Assets.xcassets */,
-				B88ABBBE2B509B6200CD9BD2 /* Preview Content */,
-				B88ABBC62B509D8A00CD9BD2 /* Transaction.swift */,
-				B81B3AC72B588597003A65A7 /* DatabaseManager.swift */,
+				B8D488AD2BAF9685005A6CD5 /* Application */,
+				B8D488AC2BAF9458005A6CD5 /* Models */,
+				B8D488AF2BAF98A5005A6CD5 /* Services */,
 			);
 			path = minty;
 			sourceTree = "<group>";
@@ -86,6 +97,69 @@
 				B88ABBBF2B509B6200CD9BD2 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B8D488AC2BAF9458005A6CD5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B88ABBC62B509D8A00CD9BD2 /* Transaction.swift */,
+				B80054C52BADF0B400A9F33D /* Category.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B8D488AD2BAF9685005A6CD5 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				B8D488B02BAF98C1005A6CD5 /* Home */,
+				B8D488AE2BAF9722005A6CD5 /* Main */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		B8D488AE2BAF9722005A6CD5 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				B88ABBB82B509B6100CD9BD2 /* mintyApp.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		B8D488AF2BAF98A5005A6CD5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B8D488B12BAF9E16005A6CD5 /* DatabaseManager.swift */,
+				B8D488B82BAFA021005A6CD5 /* Category */,
+				B8D488B72BAFA014005A6CD5 /* Transaction */,
+				B81B3AC72B588597003A65A7 /* DatabaseManagerOLD.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B8D488B02BAF98C1005A6CD5 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				B88ABBBA2B509B6100CD9BD2 /* ContentView.swift */,
+				B80054C72BADF26800A9F33D /* CategoryView.swift */,
+				B8D488B92BAFA923005A6CD5 /* TransactionViewModel.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		B8D488B72BAFA014005A6CD5 /* Transaction */ = {
+			isa = PBXGroup;
+			children = (
+				B8D488B32BAF9EBF005A6CD5 /* TransactionManager.swift */,
+			);
+			path = Transaction;
+			sourceTree = "<group>";
+		};
+		B8D488B82BAFA021005A6CD5 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				B8D488B52BAF9FF1005A6CD5 /* CategoryManager.swift */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 		C51B4326961F447D65F2CF76 /* Pods */ = {
@@ -211,10 +285,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B81B3AC82B588597003A65A7 /* DatabaseManager.swift in Sources */,
+				B81B3AC82B588597003A65A7 /* DatabaseManagerOLD.swift in Sources */,
+				B80054C62BADF0B400A9F33D /* Category.swift in Sources */,
+				B8D488B62BAF9FF1005A6CD5 /* CategoryManager.swift in Sources */,
+				B80054C82BADF26800A9F33D /* CategoryView.swift in Sources */,
 				B88ABBBB2B509B6100CD9BD2 /* ContentView.swift in Sources */,
+				B8D488B42BAF9EBF005A6CD5 /* TransactionManager.swift in Sources */,
 				B88ABBB92B509B6100CD9BD2 /* mintyApp.swift in Sources */,
 				B88ABBC72B509D8A00CD9BD2 /* Transaction.swift in Sources */,
+				B8D488B22BAF9E16005A6CD5 /* DatabaseManager.swift in Sources */,
+				B8D488BA2BAFA923005A6CD5 /* TransactionViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,7 +423,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"minty/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
 				DEVELOPMENT_TEAM = W57MHF2MU2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -373,7 +453,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"minty/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
 				DEVELOPMENT_TEAM = W57MHF2MU2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
