@@ -19,7 +19,7 @@ struct ContentView: View {
                 if transactionViewModel.transactions.isEmpty {
                     NoTransactionsView() // Custom view for no transactions
                 } else {
-                    TransactionsListView(transactions: transactionViewModel.transactions) // List view for transactions
+                    TransactionsListView(transactionViewModel: transactionViewModel, transactions: transactionViewModel.transactions) // List view for transactions
                 }
             }
             .navigationBarTitle("minty")
@@ -73,12 +73,25 @@ struct NoTransactionsView: View {
 }
 
 struct TransactionsListView: View {
+    @ObservedObject var transactionViewModel: TransactionViewModel
     var transactions: [Transaction]
     
     var body: some View {
-        List(transactions) { transaction in
-            TransactionRow(transaction: transaction)
+        List {
+            ForEach(transactions, id: \.id) { transaction in
+                TransactionRow(transaction: transaction)
+            }
+            .onDelete(perform: deleteTransactions)
         }
+    }
+    
+    private func deleteTransactions(at offsets: IndexSet) {
+        offsets.forEach { index in
+            let transaction = transactions[index]
+            transactionViewModel.deleteTransaction(transaction)
+        }
+        // Reload transactions to reflect the changes
+        transactionViewModel.loadTransactions()
     }
 }
 
