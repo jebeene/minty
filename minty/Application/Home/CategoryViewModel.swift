@@ -55,4 +55,12 @@ class CategoryViewModel: ObservableObject {
             print("Error deleting category: \(error)")
         }
     }
+    
+    func getCategoryName(byId id: UUID) -> String {
+        if let category = categories.first(where: { $0.id == id }) {
+            return category.name
+        } else {
+            return "Unknown Category"
+        }
+    }
 }

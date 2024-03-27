@@ -16,6 +16,7 @@ class TransactionManager {
     func createTable() throws {
         try db?.run(transactions.create(ifNotExists: true) { t in
             t.column(Expression<String>("id"), primaryKey: true)
+            t.column(Expression<String>("date"))
             t.column(Expression<String>("description"))
             t.column(Expression<Double>("amount"))
             t.column(Expression<String>("type"))
@@ -29,6 +30,7 @@ class TransactionManager {
         guard let db = db else { throw DatabaseManager.DatabaseError.connectionError }
         let insert = transactions.insert(
             Expression<String>("id") <- UUID().uuidString,
+            Expression<String>("date") <- ISO8601DateFormatter().string(from: transaction.date),
             Expression<String>("description") <- transaction.description,
             Expression<Double>("amount") <- transaction.amount,
             Expression<String>("type") <- transaction.type,
@@ -47,6 +49,11 @@ class TransactionManager {
                 print("Skipping a transaction due to bad id!")
                 continue
             }
+
+            guard let date = ISO8601DateFormatter().date(from: transactionRow[Expression<String>("date")]) else {
+                print("Skipping a transaction due to bad date!")
+                continue
+            }
             
             
             guard let categoryId = UUID(uuidString: transactionRow[Expression<String>("categoryId")]) else {
@@ -56,6 +63,7 @@ class TransactionManager {
                     
             let loadedTransaction = Transaction(
                 id: id,
+                date: date,
                 description: transactionRow[Expression<String>("description")],
                 amount: transactionRow[Expression<Double>("amount")],
                 type: transactionRow[Expression<String>("type")],
@@ -71,6 +79,7 @@ class TransactionManager {
         
         let transactionRow = transactions.filter(Expression<String>("id") == transaction.id.uuidString)
         let update = transactionRow.update([
+            Expression<String>("date") <- ISO8601DateFormatter().string(from: transaction.date),
             Expression<String>("description") <- transaction.description,
             Expression<Double>("amount") <- transaction.amount,
             Expression<String>("type") <- transaction.type,

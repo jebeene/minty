@@ -15,11 +15,15 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            Group {
+            List {
                 if transactionViewModel.transactions.isEmpty {
-                    NoTransactionsView() // Custom view for no transactions
+                    NoTransactionsView()
                 } else {
-                    TransactionsListView(transactionViewModel: transactionViewModel, transactions: transactionViewModel.transactions) // List view for transactions
+                    ForEach(Array(transactionViewModel.groupedTransactions.keys), id: \.self) { key in
+                        if let transactions = transactionViewModel.groupedTransactions[key] {
+                            TransactionsSectionView(monthYear: key, transactions: transactions, categoryViewModel: categoryViewModel, transactionViewModel: transactionViewModel)
+                        }
+                    }
                 }
             }
             .navigationBarTitle("minty")
@@ -72,16 +76,19 @@ struct NoTransactionsView: View {
     }
 }
 
-struct TransactionsListView: View {
-    @ObservedObject var transactionViewModel: TransactionViewModel
+struct TransactionsSectionView: View {
+    var monthYear: String
     var transactions: [Transaction]
+    var categoryViewModel: CategoryViewModel
+    var transactionViewModel: TransactionViewModel
     
     var body: some View {
-        List {
+        Section(header: Text(monthYear).font(.title3).fontWeight(.bold)) {
             ForEach(transactions, id: \.id) { transaction in
-                TransactionRow(transaction: transaction)
+                TransactionRow(transaction: transaction, categoryViewModel: categoryViewModel)
             }
             .onDelete(perform: deleteTransactions)
+
         }
     }
     
@@ -97,10 +104,18 @@ struct TransactionsListView: View {
 
 struct TransactionRow: View {
     var transaction: Transaction
+    var categoryViewModel: CategoryViewModel
 
     var body: some View {
         HStack {
-            Text(transaction.description)
+            VStack(alignment: .leading) {
+                Text(transaction.description)
+                    .bold()
+                Text(categoryViewModel.getCategoryName(byId: transaction.categoryId))
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+            .padding(5)
             Spacer()
             Text("$\(transaction.amount, specifier: "%.2f")")
                 .foregroundColor(transaction.type == "Expense" ? .red : .green)
@@ -112,6 +127,7 @@ struct AddTransactionView: View {
     @ObservedObject var transactionViewModel: TransactionViewModel
     @ObservedObject var categoryViewModel: CategoryViewModel
     @Environment(\.presentationMode) var presentationMode
+    @State private var selectedDate: Date = Date()
     @State private var description: String = ""
     @State private var amount: String = ""
     @State private var type: String = "Expense"
@@ -143,6 +159,9 @@ struct AddTransactionView: View {
                     }
                 }
 
+                DatePicker("Date", selection: $selectedDate, displayedComponents: .date)
+                    .padding() // Add padding if needed for better UI
+
                 Button("Add Category") {
                     showingAddCategory = true
                 }
@@ -167,7 +186,7 @@ struct AddTransactionView: View {
                         return
                     }
 
-                    transactionViewModel.addTransaction(description: description, amount: amountDouble, type: type, categoryId: categoryId)
+                    transactionViewModel.addTransaction(date: selectedDate, description: description, amount: amountDouble, type: type, categoryId: categoryId)
                     presentationMode.wrappedValue.dismiss()
                 }
             }
