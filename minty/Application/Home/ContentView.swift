@@ -10,41 +10,74 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var transactionViewModel = TransactionViewModel()
     @StateObject var categoryViewModel = CategoryViewModel()
-    @State private var showingAddTransaction = false  // To control the add transaction view presentation
-    @State private var showingAlert = false // State for showing an alert
-
+    @State private var showingAddTransaction = false
+    @State private var showingAlert = false
 
     var body: some View {
         NavigationView {
-            List(transactionViewModel.transactions) { transaction in
-                TransactionRow(transaction: transaction)
+            Group {
+                if transactionViewModel.transactions.isEmpty {
+                    NoTransactionsView() // Custom view for no transactions
+                } else {
+                    TransactionsListView(transactions: transactionViewModel.transactions) // List view for transactions
+                }
             }
             .navigationBarTitle("minty")
-            .navigationBarItems(
-                leading: Button("Clear Data") {
-                    showingAlert = true
-                },
-                trailing: Button(action: {
-                    showingAddTransaction = true
-                }) {
-                    Image(systemName: "plus")
-                }
-            )
+            .navigationBarItems(leading: clearDataButton, trailing: addTransactionButton)
             .sheet(isPresented: $showingAddTransaction) {
                 AddTransactionView(transactionViewModel: transactionViewModel, categoryViewModel: categoryViewModel)
             }
-            .alert(isPresented: $showingAlert) {
-                Alert(
-                    title: Text("Confirm"),
-                    message: Text("Are you sure you want to clear all data?"),
-                    primaryButton: .destructive(Text("Clear")) {
-                        DatabaseManager.instance.clearDatabase()
-                        transactionViewModel.loadTransactions()
-                        categoryViewModel.loadCategories()
-                    },
-                    secondaryButton: .cancel()
-                )
-            }
+            .alert(isPresented: $showingAlert) { clearDataAlert }
+        }
+    }
+
+    private var clearDataButton: some View {
+        Button("Clear Data") {
+            showingAlert = true
+        }
+    }
+
+    private var addTransactionButton: some View {
+        Button(action: {
+            showingAddTransaction = true
+        }) {
+            Image(systemName: "plus")
+        }
+    }
+
+    private var clearDataAlert: Alert {
+        Alert(
+            title: Text("Confirm"),
+            message: Text("Are you sure you want to clear all data?"),
+            primaryButton: .destructive(Text("Clear")) {
+                DatabaseManager.instance.clearDatabase()
+                DatabaseManager.instance.initializeTables()
+                transactionViewModel.loadTransactions()
+                categoryViewModel.loadCategories()
+            },
+            secondaryButton: .cancel()
+        )
+    }
+}
+
+struct NoTransactionsView: View {
+    var body: some View {
+        VStack {
+            Spacer()
+            Text("No transactions")
+                .foregroundColor(.gray) // Optional: Change the color if you wish
+            Spacer()
+        }
+        .frame(maxWidth: .infinity) // Expand the VStack to fill the available width
+    }
+}
+
+struct TransactionsListView: View {
+    var transactions: [Transaction]
+    
+    var body: some View {
+        List(transactions) { transaction in
+            TransactionRow(transaction: transaction)
         }
     }
 }
