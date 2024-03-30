@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var transactionViewModel = TransactionViewModel()
     @StateObject var categoryViewModel = CategoryViewModel()
+    
     @State private var showingAddTransaction = false
     @State private var showingAlert = false
 
@@ -17,23 +18,32 @@ struct ContentView: View {
         NavigationView {
             List {
                 if transactionViewModel.transactions.isEmpty {
-                    NoTransactionsView()
+                    NoTransactionsView() // Display this view when there are no transactions
                 } else {
                     ForEach(Array(transactionViewModel.groupedTransactions.keys), id: \.self) { key in
                         if let transactions = transactionViewModel.groupedTransactions[key] {
-                            TransactionsSectionView(monthYear: key, transactions: transactions, categoryViewModel: categoryViewModel, transactionViewModel: transactionViewModel)
+                            ForEach(transactions) { transaction in
+                                if let transactions = transactionViewModel.groupedTransactions[key] {
+                                    TransactionsSectionView(monthYear: key, transactions: transactions, categoryViewModel: categoryViewModel, transactionViewModel: transactionViewModel)
+                                }
+                            }
+                            .onDelete(perform: { indexSet in
+                                // Handle direct deletion from the list, if applicable
+                            })
                         }
                     }
                 }
             }
-            .navigationBarTitle("minty")
+            .navigationBarTitle("transactions")
             .navigationBarItems(leading: clearDataButton, trailing: addTransactionButton)
             .sheet(isPresented: $showingAddTransaction) {
                 AddTransactionView(transactionViewModel: transactionViewModel, categoryViewModel: categoryViewModel)
             }
+            
             .alert(isPresented: $showingAlert) { clearDataAlert }
         }
     }
+
 
     private var clearDataButton: some View {
         Button("Clear Data") {
@@ -82,20 +92,47 @@ struct TransactionsSectionView: View {
     var categoryViewModel: CategoryViewModel
     var transactionViewModel: TransactionViewModel
     
+    @State private var selectedTransaction: Transaction?
+    @State private var editingTransaction: Transaction? = nil
+    @State private var showingEditTransactionView = false
+    @State private var isEditingTransaction = false // New state to control the sheet presentation
+    
     var body: some View {
         Section(header: Text(monthYear).font(.title3).fontWeight(.bold)) {
             ForEach(transactions, id: \.id) { transaction in
-                TransactionRow(transaction: transaction, categoryViewModel: categoryViewModel)
+                NavigationLink(destination: TransactionDetailsView(transaction: transaction, categoryViewModel: categoryViewModel, onDelete: {
+                    self.transactionViewModel.deleteTransaction(byId: transaction.id)
+                }, onEdit: {
+                    self.selectedTransaction = transaction
+                    print("Selected transaction for editing: \(String(describing: self.selectedTransaction))")
+                    self.isEditingTransaction = true
+
+                }
+                )) {
+                    TransactionRow(transaction: transaction, categoryViewModel: categoryViewModel)
+                }
             }
             .onDelete(perform: deleteTransactions)
-
+        }
+        .sheet(isPresented: $isEditingTransaction, onDismiss: {
+            self.selectedTransaction = nil // Clear selected transaction on dismiss
+        }) {
+            // Since we know selectedTransaction is set when isEditingTransaction is true, force unwrap is safer here
+            // For more safety, fallback to EmptyView as a precaution
+            if let transactionToEdit = self.selectedTransaction {
+                EditTransactionView(transactionViewModel: transactionViewModel, categoryViewModel: categoryViewModel, transaction: transactionToEdit, onSave: {
+                    self.isEditingTransaction = false
+                })
+            } else {
+                EmptyView()
+            }
         }
     }
     
     private func deleteTransactions(at offsets: IndexSet) {
         offsets.forEach { index in
             let transaction = transactions[index]
-            transactionViewModel.deleteTransaction(transaction)
+            transactionViewModel.deleteTransaction(byId: transaction.id)
         }
         // Reload transactions to reflect the changes
         transactionViewModel.loadTransactions()
@@ -105,7 +142,12 @@ struct TransactionsSectionView: View {
 struct TransactionRow: View {
     var transaction: Transaction
     var categoryViewModel: CategoryViewModel
-
+    static let dateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium // Or your custom format
+            formatter.timeStyle = .none
+            return formatter
+        }()
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -114,11 +156,18 @@ struct TransactionRow: View {
                 Text(categoryViewModel.getCategoryName(byId: transaction.categoryId))
                     .font(.caption)
                     .foregroundColor(.gray)
+                Text(TransactionRow.dateFormatter.string(from: transaction.date))
+                    .font(.caption2)
+                    .foregroundColor(.gray)
             }
             .padding(5)
             Spacer()
             Text("$\(transaction.amount, specifier: "%.2f")")
-                .foregroundColor(transaction.type == "Expense" ? .red : .green)
+                .font(.body)
+                .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                .foregroundColor(.black)
+                .background(transaction.type == "Expense" ? Color.red.opacity(0.6) : Color.green.opacity(0.6))
+                .cornerRadius(5)
         }
     }
 }

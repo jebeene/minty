@@ -62,9 +62,9 @@ class TransactionViewModel: ObservableObject {
     }
 
     // Delete a transaction through the TransactionManager and reload the transactions
-    func deleteTransaction(_ transaction: Transaction) {
+    func deleteTransaction(byId id: UUID) {
         do {
-            try transactionManager.deleteTransaction(byId: transaction.id)
+            try transactionManager.deleteTransaction(byId: id)
             loadTransactions()
         } catch {
             print("Error deleting transaction: \(error)")
