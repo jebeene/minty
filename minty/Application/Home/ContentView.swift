@@ -197,10 +197,9 @@ struct AddTransactionView: View {
                     Text("Expense").tag("Expense")
                 }.pickerStyle(SegmentedPickerStyle())
 
-                // Updated picker for selecting category
                 Picker("Category", selection: $selectedCategoryId) {
                     ForEach(categoryViewModel.categories) { category in
-                        Text(category.name).tag(category.id as UUID?) // Ensuring type consistency
+                        Text(category.name).tag(category.id as UUID?)
                     }
                 }.onAppear {
                     if let firstCategoryId = categoryViewModel.categories.first?.id {
@@ -209,7 +208,7 @@ struct AddTransactionView: View {
                 }
 
                 DatePicker("Date", selection: $selectedDate, displayedComponents: .date)
-                    .padding() // Add padding if needed for better UI
+                    .padding()
 
                 Button("Add Category") {
                     showingAddCategory = true
@@ -222,7 +221,6 @@ struct AddTransactionView: View {
                 }
 
                 Button("Save") {
-                    // Validation and saving logic here
                     guard let amountDouble = Double(amount), amountDouble > 0 else {
                         alertMessage = "Invalid amount. Please enter a numeric value."
                         showAlert = true

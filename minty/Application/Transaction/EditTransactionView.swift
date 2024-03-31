@@ -56,21 +56,17 @@ struct EditTransactionView: View {
                         return
                     }
 
-                    // Assuming transaction has properties amount, date, categoryId, description.
-                    // Update the properties of the transaction with new values here.
                     transaction.amount = amountDouble
                     transaction.date = date
                     transaction.categoryId = categoryId
                     transaction.description = description
 
-                    // Update the transaction using the ViewModel
                     transactionViewModel.updateTransaction(transaction)
-                    onSave() // Call onSave closure to indicate save was successful
+                    onSave()
                 }
             }
             .navigationBarTitle("Edit Transaction", displayMode: .inline)
             .onAppear {
-                // Update the state variables with the transaction details
                 self.amount = String(transaction.amount)
                 self.date = transaction.date
                 self.selectedCategoryId = transaction.categoryId
