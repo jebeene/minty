@@ -17,6 +17,8 @@
 		B88ABBBD2B509B6200CD9BD2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B88ABBBC2B509B6200CD9BD2 /* Assets.xcassets */; };
 		B88ABBC02B509B6200CD9BD2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B88ABBBF2B509B6200CD9BD2 /* Preview Assets.xcassets */; };
 		B88ABBC72B509D8A00CD9BD2 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88ABBC62B509D8A00CD9BD2 /* Transaction.swift */; };
+		B8A40E522BD9BD6900B35DF1 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A40E512BD9BD6900B35DF1 /* FilterView.swift */; };
+		B8A40E552BD9CBF200B35DF1 /* DatePickerOptional.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A40E542BD9CBF200B35DF1 /* DatePickerOptional.swift */; };
 		B8D488B22BAF9E16005A6CD5 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D488B12BAF9E16005A6CD5 /* DatabaseManager.swift */; };
 		B8D488B42BAF9EBF005A6CD5 /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D488B32BAF9EBF005A6CD5 /* TransactionManager.swift */; };
 		B8D488B62BAF9FF1005A6CD5 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D488B52BAF9FF1005A6CD5 /* CategoryManager.swift */; };
@@ -37,6 +39,8 @@
 		B88ABBBC2B509B6200CD9BD2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B88ABBBF2B509B6200CD9BD2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B88ABBC62B509D8A00CD9BD2 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		B8A40E512BD9BD6900B35DF1 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		B8A40E542BD9CBF200B35DF1 /* DatePickerOptional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerOptional.swift; sourceTree = "<group>"; };
 		B8D488B12BAF9E16005A6CD5 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		B8D488B32BAF9EBF005A6CD5 /* TransactionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; };
 		B8D488B52BAF9FF1005A6CD5 /* CategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryManager.swift; sourceTree = "<group>"; };
@@ -101,6 +105,7 @@
 				B8D488AD2BAF9685005A6CD5 /* Application */,
 				B8D488AC2BAF9458005A6CD5 /* Models */,
 				B8D488AF2BAF98A5005A6CD5 /* Services */,
+				B8A40E532BD9CB6C00B35DF1 /* Views */,
 			);
 			path = minty;
 			sourceTree = "<group>";
@@ -111,6 +116,14 @@
 				B88ABBBF2B509B6200CD9BD2 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B8A40E532BD9CB6C00B35DF1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B8A40E542BD9CBF200B35DF1 /* DatePickerOptional.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		B8D488AC2BAF9458005A6CD5 /* Models */ = {
@@ -156,6 +169,7 @@
 			children = (
 				B88ABBBA2B509B6100CD9BD2 /* ContentView.swift */,
 				B8D488BB2BB0A8B4005A6CD5 /* CategoryViewModel.swift */,
+				B8A40E512BD9BD6900B35DF1 /* FilterView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -299,6 +313,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8A40E522BD9BD6900B35DF1 /* FilterView.swift in Sources */,
 				B81B3AC82B588597003A65A7 /* DatabaseManagerOLD.swift in Sources */,
 				B80054C62BADF0B400A9F33D /* Category.swift in Sources */,
 				B8D488B62BAF9FF1005A6CD5 /* CategoryManager.swift in Sources */,
@@ -307,6 +322,7 @@
 				B8D488B42BAF9EBF005A6CD5 /* TransactionManager.swift in Sources */,
 				B88ABBB92B509B6100CD9BD2 /* mintyApp.swift in Sources */,
 				B88ABBC72B509D8A00CD9BD2 /* Transaction.swift in Sources */,
+				B8A40E552BD9CBF200B35DF1 /* DatePickerOptional.swift in Sources */,
 				B8D488B22BAF9E16005A6CD5 /* DatabaseManager.swift in Sources */,
 				B8D488BA2BAFA923005A6CD5 /* TransactionViewModel.swift in Sources */,
 				B88A8D6C2BB8979100B4A67D /* TransactionDetailsView.swift in Sources */,

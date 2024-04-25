@@ -13,6 +13,8 @@ struct ContentView: View {
     
     @State private var showingAddTransaction = false
     @State private var showingAlert = false
+    
+    @State private var showingFilterView = false
 
     var body: some View {
         NavigationView {
@@ -35,15 +37,28 @@ struct ContentView: View {
                 }
             }
             .navigationBarTitle("transactions")
-            .navigationBarItems(leading: clearDataButton, trailing: addTransactionButton)
-            .sheet(isPresented: $showingAddTransaction) {
+            .navigationBarItems(
+                leading: clearDataButton,
+                trailing: HStack {
+                    filterButton
+                    addTransactionButton
+                }
+            )            .sheet(isPresented: $showingAddTransaction) {
                 AddTransactionView(transactionViewModel: transactionViewModel, categoryViewModel: categoryViewModel)
+            }
+            .sheet(isPresented: $showingFilterView) {
+                FilterView(transactionViewModel: transactionViewModel, categoryViewModel: categoryViewModel)
             }
             
             .alert(isPresented: $showingAlert) { clearDataAlert }
         }
     }
 
+    private var filterButton: some View {
+        Button(action: { showingFilterView.toggle() }) {
+            Image(systemName: "line.horizontal.3.decrease.circle")
+        }
+    }
 
     private var clearDataButton: some View {
         Button("Clear Data") {
