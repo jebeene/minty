@@ -10,6 +10,7 @@ import Foundation
 class TransactionViewModel: ObservableObject {
     @Published var transactions: [Transaction] = []
     @Published var groupedTransactions: [String: [Transaction]] = [:]
+    @Published var isFiltering: Bool = false
     private var transactionManager = TransactionManager()
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -71,13 +72,18 @@ class TransactionViewModel: ObservableObject {
     }
     
     func filterTransactions(startDate: Date?, endDate: Date?, category: UUID?, type: String) {
+        let calendar = Calendar.current
         var filteredTransactions = transactions
-        
-        // Filter by date range only if both dates are provided
+        isFiltering = (startDate != nil && endDate != nil) || category != nil || type != "All"
         if let startDate = startDate, let endDate = endDate {
+            let startOfStartDay = calendar.startOfDay(for: startDate)
+            let endOfEndDay = calendar.startOfDay(for: calendar.date(byAdding: .day, value: 1, to: endDate) ?? endDate)
+                   
             filteredTransactions = filteredTransactions.filter { transaction in
-                transaction.date >= startDate && transaction.date <= endDate
+                transaction.date >= startOfStartDay && transaction.date <= endOfEndDay
             }
+            print(startOfStartDay)
+            print(endOfEndDay)
         }
         
         // Filter by category if not nil
@@ -98,6 +104,11 @@ class TransactionViewModel: ObservableObject {
         groupTransactions(filteredTransactions)
     }
 
+    func clearFilters() {
+        isFiltering = false
+        loadTransactions()
+    }
+    
     private func groupTransactions(_ transactions: [Transaction]) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM yyyy"

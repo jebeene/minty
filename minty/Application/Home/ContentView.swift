@@ -13,7 +13,6 @@ struct ContentView: View {
     
     @State private var showingAddTransaction = false
     @State private var showingAlert = false
-    
     @State private var showingFilterView = false
 
     var body: some View {
@@ -30,7 +29,7 @@ struct ContentView: View {
                                 }
                             }
                             .onDelete(perform: { indexSet in
-                                // Handle direct deletion from the list, if applicable
+//                                transactionViewModel.deleteTransactions(at: indexSet)
                             })
                         }
                     }
@@ -55,10 +54,24 @@ struct ContentView: View {
     }
 
     private var filterButton: some View {
-        Button(action: { showingFilterView.toggle() }) {
-            Image(systemName: "line.horizontal.3.decrease.circle")
+        Button(action: {
+            if transactionViewModel.isFiltering {
+                // Clear the filters if they are currently applied
+                transactionViewModel.clearFilters()
+            } else {
+                // Show the filter view to allow setting filters
+                showingFilterView.toggle()
+            }
+        }) {
+            if transactionViewModel.isFiltering {
+                Image(systemName: "line.horizontal.3.decrease.circle.fill")
+                    .foregroundColor(.blue) // Filtering active icon
+            } else {
+                Image(systemName: "line.horizontal.3.decrease.circle")
+            }
         }
     }
+
 
     private var clearDataButton: some View {
         Button("Clear Data") {
