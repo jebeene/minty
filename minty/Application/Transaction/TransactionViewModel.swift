@@ -47,7 +47,7 @@ class TransactionViewModel: ObservableObject {
     func loadTransactions() {
         do {
             transactions = try transactionManager.getAllTransactions()
-            groupTransactions(transactions)
+            groupTransactions()
        } catch {
            print("Error loading transactions: \(error)")
        }
@@ -85,7 +85,7 @@ class TransactionViewModel: ObservableObject {
         do {
             try transactions = transactionManager.filterTransactions(startDate: startDate, endDate: endDate, category: category, type: type)
             isFiltering = true
-            groupTransactions(transactions)
+            groupTransactions()
         } catch {
             print("Error filtering transactions: \(error)")
         }
