@@ -21,16 +21,29 @@ struct ContentView: View {
                 if transactionViewModel.transactions.isEmpty {
                     NoTransactionsView() // Display this view when there are no transactions
                 } else {
-                    ForEach(Array(transactionViewModel.groupedTransactions.keys), id: \.self) { key in
+                    // Create a DateFormatter to convert your month-year strings back into Dates
+                    let formatter: DateFormatter = {
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "MMMM yyyy"
+                        return formatter
+                    }()
+
+                    // Sort your keys by parsing them into Date objects, then comparing those
+                    let sortedKeys = transactionViewModel.groupedTransactions.keys.sorted {
+                        guard let date1 = formatter.date(from: $0), let date2 = formatter.date(from: $1) else {
+                            return false
+                        }
+                        return date1 > date2
+                    }
+
+                    ForEach(sortedKeys, id: \.self) { key in
                         if let transactions = transactionViewModel.groupedTransactions[key] {
-                            ForEach(transactions) { transaction in
-                                if let transactions = transactionViewModel.groupedTransactions[key] {
-                                    TransactionsSectionView(monthYear: key, transactions: transactions, categoryViewModel: categoryViewModel, transactionViewModel: transactionViewModel)
-                                }
-                            }
-                            .onDelete(perform: { indexSet in
-//                                transactionViewModel.deleteTransactions(at: indexSet)
-                            })
+                            TransactionsSectionView(
+                                monthYear: key,
+                                transactions: transactions,
+                                categoryViewModel: categoryViewModel,
+                                transactionViewModel: transactionViewModel
+                            )
                         }
                     }
                 }

@@ -18,16 +18,26 @@ class TransactionViewModel: ObservableObject {
         return formatter
     }()
 
-
     private func groupTransactions() {
-        let grouped = Dictionary(grouping: transactions) { (transaction) -> String in
-            let date = transaction.date
+        let sortedTransactions = transactions.sorted(by: { $0.date > $1.date })
+        let grouped = Dictionary(grouping: sortedTransactions) { (transaction) -> String in
             let formatter = DateFormatter()
             formatter.dateFormat = "MMMM yyyy"
-            return formatter.string(from: date)
+            return formatter.string(from: transaction.date)
         }
         self.groupedTransactions = grouped
     }
+
+    
+//    private func groupTransactions() {
+//        let grouped = Dictionary(grouping: transactions) { (transaction) -> String in
+//            let date = transaction.date
+//            let formatter = DateFormatter()
+//            formatter.dateFormat = "MMMM yyyy"
+//            return formatter.string(from: date)
+//        }
+//        self.groupedTransactions = grouped
+//    }
     
     init() {
         loadTransactions()
@@ -37,7 +47,7 @@ class TransactionViewModel: ObservableObject {
     func loadTransactions() {
         do {
             transactions = try transactionManager.getAllTransactions()
-            groupTransactions()
+            groupTransactions(transactions)
        } catch {
            print("Error loading transactions: \(error)")
        }
@@ -72,36 +82,13 @@ class TransactionViewModel: ObservableObject {
     }
     
     func filterTransactions(startDate: Date?, endDate: Date?, category: UUID?, type: String) {
-        let calendar = Calendar.current
-        var filteredTransactions = transactions
-        isFiltering = (startDate != nil && endDate != nil) || category != nil || type != "All"
-        if let startDate = startDate, let endDate = endDate {
-            let startOfStartDay = calendar.startOfDay(for: startDate)
-            let endOfEndDay = calendar.startOfDay(for: calendar.date(byAdding: .day, value: 1, to: endDate) ?? endDate)
-                   
-            filteredTransactions = filteredTransactions.filter { transaction in
-                transaction.date >= startOfStartDay && transaction.date <= endOfEndDay
-            }
-            print(startOfStartDay)
-            print(endOfEndDay)
+        do {
+            try transactions = transactionManager.filterTransactions(startDate: startDate, endDate: endDate, category: category, type: type)
+            isFiltering = true
+            groupTransactions(transactions)
+        } catch {
+            print("Error filtering transactions: \(error)")
         }
-        
-        // Filter by category if not nil
-        if let category = category {
-            filteredTransactions = filteredTransactions.filter { transaction in
-                transaction.categoryId == category
-            }
-        }
-        
-        // Filter by type if not empty
-        if !type.isEmpty {
-            filteredTransactions = filteredTransactions.filter { transaction in
-                transaction.type.lowercased() == type.lowercased()
-            }
-        }
-        
-        // Update the grouped transactions based on the filters
-        groupTransactions(filteredTransactions)
     }
 
     func clearFilters() {
