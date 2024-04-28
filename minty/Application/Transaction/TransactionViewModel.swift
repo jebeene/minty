@@ -10,7 +10,16 @@ import Foundation
 class TransactionViewModel: ObservableObject {
     @Published var transactions: [Transaction] = []
     @Published var groupedTransactions: [String: [Transaction]] = [:]
+    
     @Published var isFiltering: Bool = false
+    
+    @Published var creditsTotal: Double = 0.0
+    @Published var debitsTotal: Double = 0.0
+    @Published var averageAmount: Double = 0.0
+    @Published var highestTransaction: Double = 0.0
+    @Published var lowestTransaction: Double = 0.0
+    @Published var transactionCount: Int = 0
+
     private var transactionManager = TransactionManager()
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -28,17 +37,6 @@ class TransactionViewModel: ObservableObject {
         self.groupedTransactions = grouped
     }
 
-    
-//    private func groupTransactions() {
-//        let grouped = Dictionary(grouping: transactions) { (transaction) -> String in
-//            let date = transaction.date
-//            let formatter = DateFormatter()
-//            formatter.dateFormat = "MMMM yyyy"
-//            return formatter.string(from: date)
-//        }
-//        self.groupedTransactions = grouped
-//    }
-    
     init() {
         loadTransactions()
         groupTransactions()
@@ -81,11 +79,19 @@ class TransactionViewModel: ObservableObject {
         }
     }
     
-    func filterTransactions(startDate: Date?, endDate: Date?, category: UUID?, type: String) {
+    func filterTransactions(startDate: Date?, endDate: Date?, category: UUID?, type: String, minimumAmount: Double?, maximumAmount: Double?) {
         do {
-            try transactions = transactionManager.filterTransactions(startDate: startDate, endDate: endDate, category: category, type: type)
+            try transactions = transactionManager.filterTransactions(
+                startDate: startDate,
+                endDate: endDate,
+                category: category,
+                type: type,
+                minimumAmount: minimumAmount,
+                maximumAmount: maximumAmount
+            )
             isFiltering = true
             groupTransactions()
+            calculateStatistics(transactions)
         } catch {
             print("Error filtering transactions: \(error)")
         }
@@ -96,13 +102,24 @@ class TransactionViewModel: ObservableObject {
         loadTransactions()
     }
     
-    private func groupTransactions(_ transactions: [Transaction]) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM yyyy"
-        let grouped = Dictionary(grouping: transactions) { transaction in
-            dateFormatter.string(from: transaction.date)
-        }
-        self.groupedTransactions = grouped
+    private func calculateStatistics(_ transactions: [Transaction]) {
+        transactionCount = transactions.count
+
+        let credits = transactions
+            .filter { $0.type.lowercased() == "income" }
+            .reduce(0) { $0 + $1.amount }
+
+        let debits = transactions
+            .filter { $0.type.lowercased() == "expense" }
+            .reduce(0) { $0 + $1.amount }
+
+        averageAmount = transactions.isEmpty ? 0 : (credits - debits) / Double(transactionCount)
+        highestTransaction = transactions.max(by: { $0.amount < $1.amount })?.amount ?? 0
+        lowestTransaction = transactions.min(by: { $0.amount < $1.amount })?.amount ?? 0
+
+        self.creditsTotal = credits
+        self.debitsTotal = debits
     }
 
+    
 }

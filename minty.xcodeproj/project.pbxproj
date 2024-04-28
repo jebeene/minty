@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		85A56D4AEFA01F66EA109176 /* Pods_minty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81B94EB1E8A9AB8EC6F0328D /* Pods_minty.framework */; };
 		B80054C62BADF0B400A9F33D /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80054C52BADF0B400A9F33D /* Category.swift */; };
-		B81B3AC82B588597003A65A7 /* DatabaseManagerOLD.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81B3AC72B588597003A65A7 /* DatabaseManagerOLD.swift */; };
+		B864672E2BDDF0ED00A8975D /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B864672D2BDDF0ED00A8975D /* StatisticsView.swift */; };
 		B88A8D6C2BB8979100B4A67D /* TransactionDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88A8D6B2BB8979100B4A67D /* TransactionDetailsView.swift */; };
 		B88A8D6E2BB89E7D00B4A67D /* EditTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88A8D6D2BB89E7D00B4A67D /* EditTransactionView.swift */; };
 		B88ABBB92B509B6100CD9BD2 /* mintyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88ABBB82B509B6100CD9BD2 /* mintyApp.swift */; };
@@ -30,7 +30,7 @@
 		81B94EB1E8A9AB8EC6F0328D /* Pods_minty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_minty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		957B4951114CA7BAC3FD7F75 /* Pods-minty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-minty.release.xcconfig"; path = "Target Support Files/Pods-minty/Pods-minty.release.xcconfig"; sourceTree = "<group>"; };
 		B80054C52BADF0B400A9F33D /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
-		B81B3AC72B588597003A65A7 /* DatabaseManagerOLD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerOLD.swift; sourceTree = "<group>"; };
+		B864672D2BDDF0ED00A8975D /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		B88A8D6B2BB8979100B4A67D /* TransactionDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsView.swift; sourceTree = "<group>"; };
 		B88A8D6D2BB89E7D00B4A67D /* EditTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionView.swift; sourceTree = "<group>"; };
 		B88ABBB52B509B6100CD9BD2 /* minty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = minty.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				B8A40E542BD9CBF200B35DF1 /* DatePickerOptional.swift */,
+				B864672D2BDDF0ED00A8975D /* StatisticsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -159,7 +160,6 @@
 				B8D488B12BAF9E16005A6CD5 /* DatabaseManager.swift */,
 				B8D488B82BAFA021005A6CD5 /* Category */,
 				B8D488B72BAFA014005A6CD5 /* Transaction */,
-				B81B3AC72B588597003A65A7 /* DatabaseManagerOLD.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -314,7 +314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8A40E522BD9BD6900B35DF1 /* FilterView.swift in Sources */,
-				B81B3AC82B588597003A65A7 /* DatabaseManagerOLD.swift in Sources */,
+				B864672E2BDDF0ED00A8975D /* StatisticsView.swift in Sources */,
 				B80054C62BADF0B400A9F33D /* Category.swift in Sources */,
 				B8D488B62BAF9FF1005A6CD5 /* CategoryManager.swift in Sources */,
 				B8D488BC2BB0A8B4005A6CD5 /* CategoryViewModel.swift in Sources */,

@@ -16,6 +16,7 @@ struct FilterView: View {
         formatter.dateFormat = "MMMM yyyy"
         return formatter
     }()
+    
     @State private var showStartDatePicker: Bool = false
     @State private var showEndDatePicker: Bool = false
     @State private var startDate: Date?
@@ -23,6 +24,8 @@ struct FilterView: View {
     @State private var selectedMonth: String = ""
     @State private var selectedCategory: UUID?
     @State private var transactionType: String = ""
+    @State private var minimumAmountText: String = ""
+    @State private var maximumAmountText: String = ""
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -34,17 +37,28 @@ struct FilterView: View {
                     DatePickerOptional("End Date", prompt: "add", in: ...Date(), selection: $endDate)
                 }
                 
-                Picker("Category", selection: $selectedCategory) {
-                    Text("All Categories").tag(UUID?.none)
-                    ForEach(categoryViewModel.categories, id: \.id) { category in
-                        Text(category.name).tag(category.id as UUID?)
+                Section(header: Text("Amount Range")) {
+                   TextField("Minimum Amount", text: $minimumAmountText)
+                       .keyboardType(.decimalPad)
+                   TextField("Maximum Amount", text: $maximumAmountText)
+                       .keyboardType(.decimalPad)
+                }
+                
+                Section(header: Text("Category")) {
+                    Picker("Category", selection: $selectedCategory) {
+                        Text("All Categories").tag(UUID?.none)
+                        ForEach(categoryViewModel.categories, id: \.id) { category in
+                            Text(category.name).tag(category.id as UUID?)
+                        }
                     }
                 }
                 
-                Picker("Type", selection: $transactionType) {
-                    Text("All").tag("")
-                    Text("Expense").tag("expense")
-                    Text("Income").tag("income")
+                Section(header: Text("Type")) {
+                    Picker("Type", selection: $transactionType) {
+                        Text("All").tag("")
+                        Text("Expense").tag("expense")
+                        Text("Income").tag("income")
+                    }
                 }
                 
                 Button("Apply Filters") {
@@ -65,7 +79,10 @@ struct FilterView: View {
     }
 
     func applyFilters() {
-        transactionViewModel.filterTransactions(startDate: startDate, endDate: endDate, category: selectedCategory, type: transactionType)
+        let minimumAmount = Double(minimumAmountText)
+        let maximumAmount = Double(maximumAmountText)
+        
+        transactionViewModel.filterTransactions(startDate: startDate, endDate: endDate, category: selectedCategory, type: transactionType, minimumAmount: minimumAmount, maximumAmount: maximumAmount)
         presentationMode.wrappedValue.dismiss()
     }
     

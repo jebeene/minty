@@ -14,39 +14,19 @@ struct ContentView: View {
     @State private var showingAddTransaction = false
     @State private var showingAlert = false
     @State private var showingFilterView = false
-
+    
     var body: some View {
         NavigationView {
             List {
-                if transactionViewModel.transactions.isEmpty {
-                    NoTransactionsView() // Display this view when there are no transactions
-                } else {
-                    // Create a DateFormatter to convert your month-year strings back into Dates
-                    let formatter: DateFormatter = {
-                        let formatter = DateFormatter()
-                        formatter.dateFormat = "MMMM yyyy"
-                        return formatter
-                    }()
-
-                    // Sort your keys by parsing them into Date objects, then comparing those
-                    let sortedKeys = transactionViewModel.groupedTransactions.keys.sorted {
-                        guard let date1 = formatter.date(from: $0), let date2 = formatter.date(from: $1) else {
-                            return false
-                        }
-                        return date1 > date2
-                    }
-
-                    ForEach(sortedKeys, id: \.self) { key in
-                        if let transactions = transactionViewModel.groupedTransactions[key] {
-                            TransactionsSectionView(
-                                monthYear: key,
-                                transactions: transactions,
-                                categoryViewModel: categoryViewModel,
-                                transactionViewModel: transactionViewModel
-                            )
-                        }
+                // display statistics when filtering
+                if transactionViewModel.isFiltering {
+                    Section(header: Text("Statistics")) {
+                        StatisticsView(transactionViewModel: transactionViewModel)
                     }
                 }
+
+                // display transactions
+                transactionSections
             }
             .navigationBarTitle("transactions")
             .navigationBarItems(
@@ -55,14 +35,64 @@ struct ContentView: View {
                     filterButton
                     addTransactionButton
                 }
-            )            .sheet(isPresented: $showingAddTransaction) {
+            )
+            .sheet(isPresented: $showingAddTransaction) {
                 AddTransactionView(transactionViewModel: transactionViewModel, categoryViewModel: categoryViewModel)
             }
             .sheet(isPresented: $showingFilterView) {
                 FilterView(transactionViewModel: transactionViewModel, categoryViewModel: categoryViewModel)
             }
-            
             .alert(isPresented: $showingAlert) { clearDataAlert }
+        }
+    }
+    
+    private var transactionSections: some View {
+        
+        let formatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMMM yyyy"
+            return formatter
+        }()
+
+        // Sort your keys by parsing them into Date objects, then comparing those
+        let sortedKeys = transactionViewModel.groupedTransactions.keys.sorted {
+            guard let date1 = formatter.date(from: $0), let date2 = formatter.date(from: $1) else {
+                return false
+            }
+            return date1 > date2
+        }
+        
+        return Group {
+            if !transactionViewModel.groupedTransactions.isEmpty {
+                ForEach(sortedKeys, id: \.self) { key in
+                    if let transactions = transactionViewModel.groupedTransactions[key] {
+                        TransactionsSectionView(
+                            monthYear: key,
+                            transactions: transactions,
+                            categoryViewModel: categoryViewModel,
+                            transactionViewModel: transactionViewModel
+                        )
+                    }
+                }
+            } else {
+                NoTransactionsView()
+            }
+        }
+    }
+
+    
+    struct StatisticsView: View {
+        @ObservedObject var transactionViewModel: TransactionViewModel
+
+        var body: some View {
+            VStack(alignment: .leading) {
+                Text("Credits: $\(transactionViewModel.creditsTotal, specifier: "%.2f")")
+                Text("Debits: $\(transactionViewModel.debitsTotal, specifier: "%.2f")")
+                Text("Average Transaction: $\(transactionViewModel.averageAmount, specifier: "%.2f")")
+                Text("Highest Transaction: $\(transactionViewModel.highestTransaction, specifier: "%.2f")")
+                Text("Lowest Transaction: $\(transactionViewModel.lowestTransaction, specifier: "%.2f")")
+                Text("Number of Transactions: \(transactionViewModel.transactionCount)")
+            }
         }
     }
 
@@ -84,7 +114,6 @@ struct ContentView: View {
             }
         }
     }
-
 
     private var clearDataButton: some View {
         Button("Clear Data") {

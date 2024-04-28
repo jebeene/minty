@@ -93,7 +93,7 @@ class TransactionManager {
         try db.run(transactionRow.delete())
     }
     
-    func filterTransactions(startDate: Date?, endDate: Date?, category: UUID?, type: String?) throws -> [Transaction] {
+    func filterTransactions(startDate: Date?, endDate: Date?, category: UUID?, type: String?, minimumAmount: Double?, maximumAmount: Double?) throws -> [Transaction] {
         let dateFormatter = ISO8601DateFormatter()
         var sql = "SELECT * FROM transactions WHERE 1 = 1"
         var params = [Binding?]()
@@ -105,6 +105,16 @@ class TransactionManager {
             params.append(startOfDay)
             params.append(endOfDay)
         }
+        
+        if let minimumAmount = minimumAmount {
+            sql += " AND amount >= ?"
+            params.append(minimumAmount)
+        }
+        if let maximumAmount = maximumAmount {
+            sql += " AND amount <= ?"
+            params.append(maximumAmount)
+        }
+        
         if let category = category {
             sql += " AND categoryId = ?"
             params.append(category.uuidString)
