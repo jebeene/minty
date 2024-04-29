@@ -134,8 +134,7 @@ struct ContentView: View {
             title: Text("Confirm"),
             message: Text("Are you sure you want to clear all data?"),
             primaryButton: .destructive(Text("Clear")) {
-                DatabaseManager.instance.clearDatabase()
-                DatabaseManager.instance.initializeTables()
+                DatabaseManager.instance.reset()
                 transactionViewModel.loadTransactions()
                 categoryViewModel.loadCategories()
             },
@@ -235,7 +234,7 @@ struct TransactionRow: View {
             Text("$\(transaction.amount, specifier: "%.2f")")
                 .font(.body)
                 .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
-                .foregroundColor(.black)
+                .foregroundColor(.primary)
                 .background(transaction.type == "Expense" ? Color.red.opacity(0.6) : Color.green.opacity(0.6))
                 .cornerRadius(5)
         }

@@ -13,6 +13,7 @@ struct mintyApp: App {
     init() {
 //        DatabaseManager.instance.clearDatabase()
         DatabaseManager.instance.initializeTables()
+        DatabaseManager.instance.createIndexes()
     }
     
     var body: some Scene {
