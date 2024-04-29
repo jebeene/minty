@@ -128,7 +128,7 @@ class TransactionManager {
         guard let db = db else { throw DatabaseManager.DatabaseError.connectionError }
         
         let stmt = try db.prepare(sql)
-
+        
         for row in try stmt.run(params) {
             let transaction = Transaction(
                 id: UUID(uuidString: row[0] as! String)!,

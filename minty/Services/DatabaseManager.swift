@@ -33,12 +33,12 @@ class DatabaseManager {
             let transactions = Table("transactions")
             let transactionId = Expression<String>("id")
             let date = Expression<String>("date")
-            let categoryId = Expression<String>("categoryId")
             let amount = Expression<Double>("amount")
             
             try db?.run(transactions.createIndex(transactionId, unique: true, ifNotExists: true))
             try db?.run(transactions.createIndex(date, ifNotExists: true))
             try db?.run(transactions.createIndex(amount, ifNotExists: true))
+            try db?.run(transactions.createIndex(date, amount, ifNotExists: true))
 
             print("indexes successfully created")
         } catch {
