@@ -54,7 +54,6 @@ struct ContentView: View {
             return formatter
         }()
 
-        // Sort your keys by parsing them into Date objects, then comparing those
         let sortedKeys = transactionViewModel.groupedTransactions.keys.sorted {
             guard let date1 = formatter.date(from: $0), let date2 = formatter.date(from: $1) else {
                 return false
@@ -99,16 +98,14 @@ struct ContentView: View {
     private var filterButton: some View {
         Button(action: {
             if transactionViewModel.isFiltering {
-                // Clear the filters if they are currently applied
                 transactionViewModel.clearFilters()
             } else {
-                // Show the filter view to allow setting filters
                 showingFilterView.toggle()
             }
         }) {
             if transactionViewModel.isFiltering {
                 Image(systemName: "line.horizontal.3.decrease.circle.fill")
-                    .foregroundColor(.blue) // Filtering active icon
+                    .foregroundColor(.blue)
             } else {
                 Image(systemName: "line.horizontal.3.decrease.circle")
             }
@@ -148,10 +145,10 @@ struct NoTransactionsView: View {
         VStack {
             Spacer()
             Text("No transactions")
-                .foregroundColor(.gray) // Optional: Change the color if you wish
+                .foregroundColor(.gray)
             Spacer()
         }
-        .frame(maxWidth: .infinity) // Expand the VStack to fill the available width
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -164,7 +161,7 @@ struct TransactionsSectionView: View {
     @State private var selectedTransaction: Transaction?
     @State private var editingTransaction: Transaction? = nil
     @State private var showingEditTransactionView = false
-    @State private var isEditingTransaction = false // New state to control the sheet presentation
+    @State private var isEditingTransaction = false
     
     var body: some View {
         Section(header: Text(monthYear).font(.title3).fontWeight(.bold)) {
@@ -184,10 +181,8 @@ struct TransactionsSectionView: View {
             .onDelete(perform: deleteTransactions)
         }
         .sheet(isPresented: $isEditingTransaction, onDismiss: {
-            self.selectedTransaction = nil // Clear selected transaction on dismiss
+            self.selectedTransaction = nil
         }) {
-            // Since we know selectedTransaction is set when isEditingTransaction is true, force unwrap is safer here
-            // For more safety, fallback to EmptyView as a precaution
             if let transactionToEdit = self.selectedTransaction {
                 EditTransactionView(transactionViewModel: transactionViewModel, categoryViewModel: categoryViewModel, transaction: transactionToEdit, onSave: {
                     self.isEditingTransaction = false
@@ -203,7 +198,6 @@ struct TransactionsSectionView: View {
             let transaction = transactions[index]
             transactionViewModel.deleteTransaction(byId: transaction.id)
         }
-        // Reload transactions to reflect the changes
         transactionViewModel.loadTransactions()
     }
 }
@@ -213,7 +207,7 @@ struct TransactionRow: View {
     var categoryViewModel: CategoryViewModel
     static let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
-            formatter.dateStyle = .medium // Or your custom format
+            formatter.dateStyle = .medium
             formatter.timeStyle = .none
             return formatter
         }()
@@ -323,7 +317,6 @@ struct AddCategoryView: View {
     @State private var categoryName: String = ""
     @Environment(\.presentationMode) var presentationMode
 
-    // Add a completion handler to pass back the new category ID
     var onCategoryAdded: (UUID) -> Void
 
     var body: some View {
@@ -331,10 +324,10 @@ struct AddCategoryView: View {
             Form {
                 TextField("Category Name", text: $categoryName)
                 Button("Save") {
-                    let newCategoryId = UUID() // Generate a new UUID for the category
+                    let newCategoryId = UUID()
                     categoryViewModel.addCategory(id: newCategoryId, name: categoryName)
-                    onCategoryAdded(newCategoryId) // Pass the new category ID back
-                    presentationMode.wrappedValue.dismiss() // Dismiss after saving
+                    onCategoryAdded(newCategoryId)
+                    presentationMode.wrappedValue.dismiss() 
                 }
             }
             .navigationBarTitle("Add Category", displayMode: .inline)

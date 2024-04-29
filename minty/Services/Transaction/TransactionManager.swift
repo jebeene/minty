@@ -24,8 +24,6 @@ class TransactionManager {
         })
     }
 
-    // Add methods for insert, query, update, delete
-    
     func addTransaction(_ transaction: Transaction) throws {
         guard let db = db else { throw DatabaseManager.DatabaseError.connectionError }
         let insert = transactions.insert(

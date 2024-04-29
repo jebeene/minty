@@ -20,7 +20,7 @@ struct DatePickerOptional: View {
             HStack {
                 Text(label)
                     .multilineTextAlignment(.leading)
-                    .foregroundColor(.primary)  // Use the primary text color
+                    .foregroundColor(.primary)
                 Spacer()
                 if showDate {
                     Button {
@@ -30,7 +30,7 @@ struct DatePickerOptional: View {
                         Image(systemName: "xmark.circle")
                             .resizable()
                             .frame(width: 16, height: 16)
-                            .foregroundColor(.secondary)  // Use a secondary color for less emphasis
+                            .foregroundColor(.secondary)
                     }
                     DatePicker(
                         label,
@@ -49,14 +49,14 @@ struct DatePickerOptional: View {
                     } label: {
                         Text(prompt)
                             .multilineTextAlignment(.center)
-                            .foregroundColor(.primary)  // Color for the prompt button text
+                            .foregroundColor(.primary)
                     }
                     .frame(width: 120, height: 34)
                     .background(
                         RoundedRectangle(cornerRadius: 8)
-                            .fill(Color(UIColor.systemGray5))  // A system gray that works well in light and dark mode
+                            .fill(Color(UIColor.systemGray5))
                     )
-                    .foregroundColor(.white)  // Text color when button is pressed
+                    .foregroundColor(.white)
                     .multilineTextAlignment(.trailing)
                 }
             }

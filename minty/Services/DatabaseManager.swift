@@ -8,7 +8,7 @@
 import SQLite
 
 class DatabaseManager {
-    static let instance = DatabaseManager()  // Singleton instance
+    static let instance = DatabaseManager()
     private let db: Connection?
 
     init() {
@@ -55,12 +55,10 @@ class DatabaseManager {
         let allIndexes = ["idx_transaction_id", "idx_date", "idx_amount"]
         
         do {
-            // Drop indexes first to avoid dependencies and constraints issues
             for indexName in allIndexes {
                 try db?.run("DROP INDEX IF EXISTS \(indexName)")
             }
 
-            // Drop tables
             for tableName in allTables {
                 try db?.run("DROP TABLE IF EXISTS \(tableName)")
             }

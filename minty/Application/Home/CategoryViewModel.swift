@@ -15,17 +15,14 @@ class CategoryViewModel: ObservableObject {
         loadCategories()
     }
     
-    // Load categories from the database through the CategoryManager
     func loadCategories() {
         do {
             categories = try categoryManager.getAllCategories()
         } catch {
-            // Handle the error, e.g., by logging it or setting an error state
             print("Error loading categories: \(error)")
         }
     }
 
-    // Add a category through the CategoryManager and reload the categories
     func addCategory(id: UUID, name: String) {
         do {
             let newCategory = Category(id: id, name: name)
@@ -36,7 +33,6 @@ class CategoryViewModel: ObservableObject {
         }
     }
 
-    // Update a category through the CategoryManager and reload the categories
     func updateCategory(_ category: Category) {
         do {
             try categoryManager.updateCategory(category)
@@ -46,7 +42,6 @@ class CategoryViewModel: ObservableObject {
         }
     }
 
-    // Delete a category through the CategoryManager and reload the categories
     func deleteCategory(_ category: Category) {
         do {
             try categoryManager.deleteCategory(byId: category.id)

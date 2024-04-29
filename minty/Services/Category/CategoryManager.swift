@@ -20,8 +20,6 @@ class CategoryManager {
         })
     }
 
-    // Add methods for insert, query, update, delete
-    
     func addCategory(_ category: Category) throws {
         guard let db = db else { throw DatabaseManager.DatabaseError.connectionError }
         let insert = categories.insert(
